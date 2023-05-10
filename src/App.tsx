@@ -1,7 +1,17 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
+import Editor from "./components/Editor";
 
 function App() {
-  return <div className="bg-purple-600">Home</div>;
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/editor/:id" element={<Editor />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
