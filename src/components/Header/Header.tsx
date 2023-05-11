@@ -1,4 +1,5 @@
-import React from "react";
+import { useState } from "react";
+import Avatar from "react-avatar";
 import logo from "../../assets/images/code-collab-logo.svg";
 
 type THeader = {
@@ -6,8 +7,31 @@ type THeader = {
 };
 
 const Header = ({ isHome }: THeader) => {
+  const [clients, setClients] = useState([
+    {
+      clientId: 1,
+      name: "John Doe",
+    },
+    {
+      clientId: 2,
+      name: "William Wills",
+    },
+    {
+      clientId: 3,
+      name: "Robert Jr",
+    },
+    {
+      clientId: 4,
+      name: "Spider man",
+    },
+  ]);
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const onLeave = () => {};
+
   return (
-    <header className="bg-zinc-900 text-white ">
+    <header className="bg-zinc-900 text-white">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="logo">
@@ -21,7 +45,10 @@ const Header = ({ isHome }: THeader) => {
                 <span className="absolute -right-2 -top-2 rounded-full w-6 text-center p-1 bg-white text-black text-xs">
                   4
                 </span>
-                <button className="flex items-center gap-3 bg-zinc-800 hover:bg-zinc-700 border border-gray-600 rounded-sm p-3 font-semibold ease-in duration-75">
+                <button
+                  onClick={() => setIsDropdownOpen((prev) => !prev)}
+                  className="flex items-center gap-3 bg-zinc-800 hover:bg-zinc-700 border border-gray-600 rounded-sm p-3 font-semibold ease-in duration-75"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="22"
@@ -38,8 +65,53 @@ const Header = ({ isHome }: THeader) => {
                   </svg>
                   Collaborators
                 </button>
+
+                {isDropdownOpen && (
+                  <div className="absolute w-80  top-14 right-0 bg-zinc-800 p-4 border border-gray-600 rounded-sm drop-shadow-xl">
+                    <button className="flex items-center justify-center gap-2 bg-blue-600 w-full p-3 cursor-pointer font-semibold rounded-sm text-sm hover:bg-blue-700 ease-in duration-75">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        fill="none"
+                      >
+                        <path
+                          stroke="#fff"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M13.055 3.24a1.876 1.876 0 0 0-1.805-1.365h-2.5c-.859 0-1.583.577-1.805 1.365m6.11 0c.046.162.07.333.07.51v0c0 .345-.28.625-.625.625h-5a.625.625 0 0 1-.625-.625v0c0-.177.024-.348.07-.51m6.11 0c.538.04 1.074.092 1.606.154.917.106 1.589.897 1.589 1.82V16.25c0 1.035-.84 1.875-1.875 1.875h-8.75A1.875 1.875 0 0 1 3.75 16.25V5.214c0-.923.672-1.714 1.589-1.82a40.184 40.184 0 0 1 1.606-.154"
+                        />
+                      </svg>
+                      Copy Invite Code
+                    </button>
+                    <span className="block w-full h-px bg-[#5d5d5d] mt-4"></span>
+                    <div className="max-h-48 mt-3 overflow-y-auto">
+                      {clients &&
+                        clients.map((client) => (
+                          <div
+                            className="flex items-center gap-3 py-2"
+                            key={client.clientId}
+                          >
+                            <Avatar
+                              name={client.name}
+                              size="36"
+                              round="4px"
+                              maxInitials={1}
+                              textSizeRatio={2}
+                            />
+                            <p>{client.name}</p>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                )}
               </div>
-              <button className="bg-red-600 hover:bg-opacity-10 bg-opacity-25 rounded-sm py-3 px-6 text-red-600 font-semibold ease-in duration-75">
+
+              <button
+                onClick={onLeave}
+                className="bg-red-600 hover:bg-opacity-10 bg-opacity-25 rounded-sm py-3 px-6 text-red-600 font-semibold ease-in duration-75"
+              >
                 Leave
               </button>
             </div>
