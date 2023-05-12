@@ -47,7 +47,7 @@ const Header = ({ isHome }: THeader) => {
                 </span>
                 <button
                   onClick={() => setIsDropdownOpen((prev) => !prev)}
-                  className="flex items-center gap-3 bg-zinc-800 hover:bg-zinc-700 border border-gray-600 rounded-sm p-3 font-semibold ease-in duration-75"
+                  className="flex items-center gap-3 bg-zinc-800 hover:bg-zinc-700 border-2 border-gray-600 rounded-sm p-3 font-semibold ease-in duration-75"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -67,7 +67,7 @@ const Header = ({ isHome }: THeader) => {
                 </button>
 
                 {isDropdownOpen && (
-                  <div className="absolute w-80  top-14 right-0 bg-zinc-800 p-4 border border-gray-600 rounded-sm drop-shadow-xl">
+                  <div className="absolute w-80  top-14 right-0 bg-zinc-800 p-4 border-2 border-gray-600 rounded-sm drop-shadow-xl">
                     <button className="flex items-center justify-center gap-2 bg-blue-600 w-full p-3 cursor-pointer font-semibold rounded-sm text-sm hover:bg-blue-700 ease-in duration-75">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
