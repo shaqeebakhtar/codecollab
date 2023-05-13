@@ -32,7 +32,7 @@ const Header = ({ isHome }: THeader) => {
 
   return (
     <header className="bg-zinc-900 text-white">
-      <div className="container mx-auto px-6 py-4">
+      <div className="mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="logo">
             <a href="/">

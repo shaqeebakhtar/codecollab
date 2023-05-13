@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Header from "./Header/Header";
+import Header from "../components/Header/Header";
 
 const Home = () => {
   const [roomId, setRoomId] = useState("");
@@ -18,7 +18,7 @@ const Home = () => {
             name="room-id"
             id="room-id"
             placeholder="Enter Room Id"
-            className="w-full p-2 rounded-sm border-2 border-gray-600 bg-zinc-800 outline-none focus:border-blue-600"
+            className="w-full p-3 rounded-sm border-2 border-gray-600 bg-zinc-800 outline-none focus:border-blue-600"
           />
           <input
             value={username}
@@ -27,14 +27,14 @@ const Home = () => {
             name="username"
             id="username"
             placeholder="Enter Name to be displayed"
-            className="w-full p-2 rounded-sm border-2 border-gray-600 bg-zinc-800 outline-none focus:border-blue-600 mt-4"
+            className="w-full p-3 rounded-sm border-2 border-gray-600 bg-zinc-800 outline-none focus:border-blue-600 mt-4"
           />
           <button className="w-full p-3 rounded-sm font-semibold bg-blue-600 hover:bg-blue-700 ease-in duration-75 mt-6">
             Join
           </button>
           <p className="text-sm text-right mt-4">
             Don't have a room id?{" "}
-            <span className="underline cursor-pointer font-bold">
+            <span className="underline cursor-pointer font-bold text-blue-600">
               Create Room
             </span>
           </p>
