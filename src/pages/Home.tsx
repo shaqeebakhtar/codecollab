@@ -1,9 +1,24 @@
 import { useState } from "react";
 import Header from "../components/Header/Header";
+import { v4 as uuidv4 } from "uuid";
 
 const Home = () => {
   const [roomId, setRoomId] = useState("");
   const [username, setUsername] = useState("");
+  const [error, setError] = useState("");
+
+  const handleCreateNewRoom = () => {
+    const id = uuidv4();
+    setRoomId(id);
+  };
+
+  const handleJoinRoom = () => {
+    setError("");
+    if (!username) {
+      setError("Username is required!");
+      return;
+    }
+  };
 
   return (
     <>
@@ -29,12 +44,19 @@ const Home = () => {
             placeholder="Enter Name to be displayed"
             className="w-full p-3 rounded-sm border-2 border-gray-600 bg-zinc-800 outline-none focus:border-blue-600 mt-4"
           />
-          <button className="w-full p-3 rounded-sm font-semibold bg-blue-600 hover:bg-blue-700 ease-in duration-75 mt-6">
+          {error && <span className="text-red-600 text-sm">{error}</span>}
+          <button
+            className="w-full p-3 rounded-sm font-semibold bg-blue-600 hover:bg-blue-700 ease-in duration-75 mt-6"
+            onClick={handleJoinRoom}
+          >
             Join
           </button>
           <p className="text-sm text-right mt-4">
             Don't have a room id?{" "}
-            <span className="underline cursor-pointer font-bold text-blue-600">
+            <span
+              className="underline cursor-pointer font-bold text-blue-600"
+              onClick={handleCreateNewRoom}
+            >
               Create Room
             </span>
           </p>
