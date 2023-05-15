@@ -17,3 +17,8 @@
 
 @tailwind components;
 @tailwind utilities;
+
+.CodeMirror {
+  height: 91% !important;
+  font-size: 1.125rem !important;
+}
