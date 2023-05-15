@@ -41,69 +41,73 @@ const Home = () => {
     return true;
   };
 
-  const handleJoinRoom = (event: React.FormEvent<HTMLFormElement>) => {
-    event?.preventDefault();
+  const handleJoinRoom = () => {
     if (!validateInputs()) return;
 
     navigate(`/editor/${roomId}`);
+  };
+
+  const handleEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.code === "Enter") handleJoinRoom();
   };
 
   return (
     <>
       <Header isHome={true} />
       <div className="flex items-center justify-center bg-zinc-900 text-white h-[92vh]">
-        <form onSubmit={(event) => handleJoinRoom(event)}>
-          <div className="w-full max-w-lg bg-zinc-900 ml-3 mr-3 p-8 rounded-sm border-2 border-gray-600">
-            <h1 className="font-bold text-3xl mb-8">Join/Create Rooms</h1>
-            <input
-              value={roomId}
-              onChange={(e) => setRoomId(e.target.value)}
-              type="text"
-              name="room-id"
-              id="room-id"
-              placeholder="Enter Room Id"
-              className={
-                !error.room_id
-                  ? "w-full p-3 rounded-sm border-2 border-gray-600 bg-zinc-800 outline-none focus:border-blue-600"
-                  : "w-full p-3 rounded-sm border-2 border-red-600 bg-zinc-800 outline-none focus:border-red-600"
-              }
-            />
-            {error && (
-              <span className="text-red-600 text-sm">{error.room_id}</span>
-            )}
-            <input
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              type="text"
-              name="username"
-              id="username"
-              placeholder="Enter Name to be displayed"
-              className={
-                !error.username
-                  ? "w-full p-3 rounded-sm border-2 border-gray-600 bg-zinc-800 outline-none focus:border-blue-600 mt-4"
-                  : "w-full p-3 rounded-sm border-2 border-red-600 bg-zinc-800 outline-none focus:border-red-600 mt-4"
-              }
-            />
-            {error && (
-              <span className="text-red-600 text-sm">{error.username}</span>
-            )}
-            <button
-              type="submit"
-              className="w-full p-3 rounded-sm font-semibold bg-blue-600 hover:bg-blue-700 ease-in duration-75 mt-6"
+        <div className="w-full max-w-lg bg-zinc-900 ml-3 mr-3 p-8 rounded-sm border-2 border-gray-600">
+          <h1 className="font-bold text-3xl mb-8">Join/Create Rooms</h1>
+          <input
+            value={roomId}
+            onChange={(e) => setRoomId(e.target.value)}
+            onKeyUp={(e) => handleEnter(e)}
+            type="text"
+            name="room-id"
+            id="room-id"
+            placeholder="Enter Room Id"
+            className={
+              !error.room_id
+                ? "w-full p-3 rounded-sm border-2 border-gray-600 bg-zinc-800 outline-none focus:border-blue-600"
+                : "w-full p-3 rounded-sm border-2 border-red-600 bg-zinc-800 outline-none focus:border-red-600"
+            }
+          />
+          {error && (
+            <span className="text-red-600 text-sm">{error.room_id}</span>
+          )}
+          <input
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            onKeyUp={(e) => handleEnter(e)}
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Enter Name to be displayed"
+            className={
+              !error.username
+                ? "w-full p-3 rounded-sm border-2 border-gray-600 bg-zinc-800 outline-none focus:border-blue-600 mt-4"
+                : "w-full p-3 rounded-sm border-2 border-red-600 bg-zinc-800 outline-none focus:border-red-600 mt-4"
+            }
+          />
+          {error && (
+            <span className="text-red-600 text-sm">{error.username}</span>
+          )}
+          <button
+            type="submit"
+            onClick={handleJoinRoom}
+            className="w-full p-3 rounded-sm font-semibold bg-blue-600 hover:bg-blue-700 ease-in duration-75 mt-6"
+          >
+            Join
+          </button>
+          <p className="text-sm text-right mt-4">
+            Don't have a room id?{" "}
+            <span
+              className="underline cursor-pointer font-bold text-blue-600"
+              onClick={handleCreateNewRoom}
             >
-              Join
-            </button>
-            <p className="text-sm text-right mt-4">
-              Don't have a room id?{" "}
-              <span
-                className="underline cursor-pointer font-bold text-blue-600"
-                onClick={handleCreateNewRoom}
-              >
-                Create Room
-              </span>
-            </p>
-          </div>
-        </form>
+              Create Room
+            </span>
+          </p>
+        </div>
       </div>
     </>
   );
