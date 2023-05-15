@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Avatar from "react-avatar";
 import logo from "../../assets/images/code-collab-logo.svg";
 
@@ -25,10 +26,12 @@ const Header = ({ isHome }: THeader) => {
       name: "Spider man",
     },
   ]);
-
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
-  const onLeave = () => {};
+  const onLeave = () => {
+    navigate("/");
+  };
 
   return (
     <header className="bg-zinc-900 text-white">
