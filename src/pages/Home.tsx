@@ -2,6 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header/Header";
 import { v4 as uuidv4 } from "uuid";
+import { useDispatch } from "react-redux";
+import {
+  setCollaboratorName,
+  setEditorRoomId,
+  setNumberOfCollaborators,
+} from "../redux/editorSlice";
 
 const Home = () => {
   const [roomId, setRoomId] = useState("");
@@ -11,6 +17,7 @@ const Home = () => {
     username: "",
   });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleCreateNewRoom = () => {
     const id = uuidv4();
@@ -43,7 +50,9 @@ const Home = () => {
 
   const handleJoinRoom = () => {
     if (!validateInputs()) return;
-
+    dispatch(setEditorRoomId(roomId));
+    dispatch(setCollaboratorName(username));
+    dispatch(setNumberOfCollaborators(1));
     navigate(`/editor/${roomId}`);
   };
 

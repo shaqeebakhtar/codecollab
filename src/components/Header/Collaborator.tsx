@@ -1,5 +1,8 @@
 import { useState } from "react";
 import Avatar from "react-avatar";
+import { useToast } from "@chakra-ui/toast";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../redux/store";
 
 type CollaboratorProps = {
   isDropdownOpen: boolean;
@@ -27,12 +30,33 @@ const Collaborator = ({
       clientId: 4,
       name: "Spider man",
     },
+    {
+      clientId: 4,
+      name: "Spider man",
+    },
   ]);
+  const toast = useToast();
+  const editorRoomId = useSelector(
+    (state: RootState) => state.editor.editorRoomId
+  );
+
+  const handleCopyRoomId = () => {
+    navigator.clipboard.writeText(editorRoomId);
+
+    toast({
+      title: "Room Id copied successfully",
+      status: "success",
+      duration: 2500,
+      isClosable: false,
+      position: "top",
+      variant: "top-accent",
+    });
+  };
 
   return (
     <div className="relative">
       <span className="absolute -right-2 -top-2 rounded-full w-6 text-center p-1 bg-white text-black text-xs">
-        4
+        {clients.length}
       </span>
       <button
         onClick={() => setIsDropdownOpen((prev: boolean) => !prev)}
@@ -56,8 +80,11 @@ const Collaborator = ({
       </button>
 
       {isDropdownOpen && (
-        <div className="absolute w-80  top-14 right-0 bg-zinc-800 p-4 border-2 border-gray-600 rounded-sm drop-shadow-xl">
-          <button className="flex items-center justify-center gap-2 bg-blue-600 w-full p-3 cursor-pointer font-semibold rounded-sm text-sm hover:bg-blue-700 ease-in duration-75">
+        <div className="absolute z-50 w-80 top-14 right-0 bg-zinc-800 p-4 border-2 border-gray-600 rounded-sm drop-shadow-xl">
+          <button
+            className="flex items-center justify-center gap-2 bg-blue-600 w-full p-3 cursor-pointer font-semibold rounded-sm text-sm hover:bg-blue-700 ease-in duration-75"
+            onClick={handleCopyRoomId}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
