@@ -20,9 +20,11 @@ const Collaborator = ({
   setIsDropdownOpen,
 }: CollaboratorProps) => {
   const toast = useToast();
-  const editorRoomId = useSelector(
-    (state: RootState) => state.editor.editorRoomId
+  const { editorRoomId, collaboratorName } = useSelector(
+    (state: RootState) => state.editor
   );
+
+  const editorName = collaboratorName;
 
   const handleCopyRoomId = () => {
     navigator.clipboard.writeText(editorRoomId);
@@ -97,7 +99,11 @@ const Collaborator = ({
                     maxInitials={1}
                     textSizeRatio={2}
                   />
-                  <p>{client.collaboratorName}</p>
+                  <p>
+                    {editorName === client.collaboratorName
+                      ? `${client.collaboratorName} (You)`
+                      : client.collaboratorName}
+                  </p>
                 </div>
               ))}
           </div>

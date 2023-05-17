@@ -22,11 +22,14 @@ const Editor = () => {
   const socketRef = useRef<null | Socket<DefaultEventsMap, DefaultEventsMap>>(
     null
   );
+  const codeRef = useRef<string | null>(null);
   const navigate = useNavigate();
   const toast = useToast();
   const { editorRoomId, collaboratorName } = useSelector(
     (state: RootState) => state.editor
   );
+
+  const editorName = collaboratorName;
 
   useEffect(() => {
     (async () => {
@@ -51,12 +54,18 @@ const Editor = () => {
       socketRef.current.on(
         ACTIONS.JOINED,
         ({ clients, collaboratorName, socketId }) => {
-          toast({
-            title: `${collaboratorName} has joined the room`,
-            status: "info",
-            isClosable: false,
-          });
+          if (collaboratorName !== editorName) {
+            toast({
+              title: `${collaboratorName} has joined the room`,
+              status: "info",
+              isClosable: false,
+            });
+          }
           setClients(clients);
+          socketRef.current?.emit(ACTIONS.SYNC_CODE, {
+            code: codeRef.current,
+            socketId,
+          });
         }
       );
 
@@ -77,11 +86,11 @@ const Editor = () => {
     })();
 
     return () => {
-      socketRef.current!.off(ACTIONS.JOINED);
-      socketRef.current!.off(ACTIONS.DISCONNECTED);
-      socketRef.current!.disconnect();
+      socketRef.current?.off(ACTIONS.JOINED);
+      socketRef.current?.off(ACTIONS.DISCONNECTED);
+      socketRef.current?.disconnect();
     };
-  }, []);
+  }, [collaboratorName, editorRoomId, navigate, toast, editorName]);
 
   if (!collaboratorName) {
     navigate("/");
@@ -91,7 +100,13 @@ const Editor = () => {
     <>
       <Header clients={clients} />
       <div className="grid grid-cols-3 text-white">
-        <CodeEditor />
+        <CodeEditor
+          editorRoomId={editorRoomId}
+          socketRef={socketRef.current}
+          onCodeChange={(code) => {
+            codeRef.current = code;
+          }}
+        />
         <div className="grid grid-row-2 bg-zinc-900">
           <InputArea />
           <OutputArea />
