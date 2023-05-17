@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import CodeEditor from "../components/Editor/CodeEditor";
 import InputArea from "../components/Editor/InputArea";
 import OutputArea from "../components/Editor/OutputArea";
@@ -12,7 +12,13 @@ import ACTIONS from "../actions";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 
+type TClients = {
+  socketId: string;
+  collaboratorName: string;
+};
+
 const Editor = () => {
+  const [clients, setClients] = useState<TClients[]>([]);
   const socketRef = useRef<null | Socket<DefaultEventsMap, DefaultEventsMap>>(
     null
   );
@@ -45,17 +51,45 @@ const Editor = () => {
       socketRef.current.on(
         ACTIONS.JOINED,
         ({ clients, collaboratorName, socketId }) => {
-          console.log(socketId);
+          toast({
+            title: `${collaboratorName} has joined the room`,
+            status: "info",
+            isClosable: false,
+          });
+          setClients(clients);
+        }
+      );
+
+      // disconnected client
+      socketRef.current.on(
+        ACTIONS.DISCONNECTED,
+        ({ socketId, collaboratorName }) => {
+          toast({
+            title: `${collaboratorName} has left the room`,
+            status: "info",
+            isClosable: false,
+          });
+          setClients((prev) => {
+            return prev.filter((client) => client.socketId !== socketId);
+          });
         }
       );
     })();
 
-    return () => {};
+    return () => {
+      socketRef.current!.off(ACTIONS.JOINED);
+      socketRef.current!.off(ACTIONS.DISCONNECTED);
+      socketRef.current!.disconnect();
+    };
   }, []);
+
+  if (!collaboratorName) {
+    navigate("/");
+  }
 
   return (
     <>
-      <Header />
+      <Header clients={clients} />
       <div className="grid grid-cols-3 text-white">
         <CodeEditor />
         <div className="grid grid-row-2 bg-zinc-900">

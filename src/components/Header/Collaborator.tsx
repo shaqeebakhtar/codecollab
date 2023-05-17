@@ -1,40 +1,24 @@
-import { useState } from "react";
 import Avatar from "react-avatar";
 import { useToast } from "@chakra-ui/toast";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../redux/store";
 
+type TClients = {
+  socketId: string;
+  collaboratorName: string;
+};
+
 type CollaboratorProps = {
+  clients?: TClients[];
   isDropdownOpen: boolean;
   setIsDropdownOpen: (prev: (prev: boolean) => boolean) => void;
 };
 
 const Collaborator = ({
+  clients,
   isDropdownOpen,
   setIsDropdownOpen,
 }: CollaboratorProps) => {
-  const [clients, setClients] = useState([
-    {
-      clientId: 1,
-      name: "John Doe",
-    },
-    {
-      clientId: 2,
-      name: "William Wills",
-    },
-    {
-      clientId: 3,
-      name: "Robert Jr",
-    },
-    {
-      clientId: 4,
-      name: "Spider man",
-    },
-    {
-      clientId: 4,
-      name: "Spider man",
-    },
-  ]);
   const toast = useToast();
   const editorRoomId = useSelector(
     (state: RootState) => state.editor.editorRoomId
@@ -53,7 +37,7 @@ const Collaborator = ({
   return (
     <div className="relative">
       <span className="absolute -right-2 -top-2 rounded-full w-6 text-center p-1 bg-white text-black text-xs">
-        {clients.length}
+        {clients?.length}
       </span>
       <button
         onClick={() => setIsDropdownOpen((prev: boolean) => !prev)}
@@ -104,16 +88,16 @@ const Collaborator = ({
               clients.map((client) => (
                 <div
                   className="flex items-center gap-3 py-2"
-                  key={client.clientId}
+                  key={client.socketId}
                 >
                   <Avatar
-                    name={client.name}
+                    name={client.collaboratorName}
                     size="36"
                     round="4px"
                     maxInitials={1}
                     textSizeRatio={2}
                   />
-                  <p>{client.name}</p>
+                  <p>{client.collaboratorName}</p>
                 </div>
               ))}
           </div>

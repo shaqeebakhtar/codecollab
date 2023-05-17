@@ -3,11 +3,17 @@ import { useNavigate } from "react-router-dom";
 import logo from "../../assets/images/code-collab-logo.svg";
 import Collaborator from "./Collaborator";
 
-type THeaderProps = {
-  isHome?: boolean;
+type TClients = {
+  socketId: string;
+  collaboratorName: string;
 };
 
-const Header = ({ isHome }: THeaderProps) => {
+type THeaderProps = {
+  isHome?: boolean;
+  clients?: TClients[];
+};
+
+const Header = ({ isHome, clients }: THeaderProps) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -27,6 +33,7 @@ const Header = ({ isHome }: THeaderProps) => {
           {!isHome && (
             <div className="flex items-center gap-7">
               <Collaborator
+                clients={clients}
                 isDropdownOpen={isDropdownOpen}
                 setIsDropdownOpen={setIsDropdownOpen}
               />
