@@ -46,10 +46,7 @@ const Collaborator = ({
     toast({
       title: "Room Id copied successfully",
       status: "success",
-      duration: 2500,
       isClosable: false,
-      position: "top",
-      variant: "top-accent",
     });
   };
 

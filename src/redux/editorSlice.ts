@@ -1,9 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+interface IInitialState {
+  editorRoomId: string;
+  collaboratorName: string;
+}
+
+const initialState: IInitialState = {
   editorRoomId: "",
   collaboratorName: "",
-  numberOfCollaborators: 0,
 };
 
 const editorSlice = createSlice({
@@ -17,17 +21,9 @@ const editorSlice = createSlice({
     setCollaboratorName: (state, action) => {
       state.collaboratorName = action.payload;
     },
-
-    setNumberOfCollaborators: (state, action) => {
-      state.numberOfCollaborators += action.payload;
-    },
   },
 });
 
-export const {
-  setEditorRoomId,
-  setCollaboratorName,
-  setNumberOfCollaborators,
-} = editorSlice.actions;
+export const { setEditorRoomId, setCollaboratorName } = editorSlice.actions;
 
 export default editorSlice.reducer;

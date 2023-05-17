@@ -8,7 +8,15 @@ import { store } from "./redux/store";
 function App() {
   return (
     <Provider store={store}>
-      <ChakraProvider>
+      <ChakraProvider
+        toastOptions={{
+          defaultOptions: {
+            position: "top",
+            duration: 2500,
+            variant: "top-accent",
+          },
+        }}
+      >
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
