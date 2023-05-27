@@ -100,9 +100,10 @@ const Collaborator = ({
                     textSizeRatio={2}
                   />
                   <p>
-                    {editorName === client.collaboratorName
-                      ? `${client.collaboratorName} (You)`
-                      : client.collaboratorName}
+                    {client.collaboratorName}
+                    <span className="text-xs font-semibold text-zinc-400">
+                      {editorName === client.collaboratorName && " (You)"}
+                    </span>
                   </p>
                 </div>
               ))}

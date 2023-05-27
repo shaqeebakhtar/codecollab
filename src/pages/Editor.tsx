@@ -11,6 +11,7 @@ import { useToast } from "@chakra-ui/react";
 import ACTIONS from "../actions";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import Split from "react-split";
 
 type TClients = {
   socketId: string;
@@ -99,7 +100,12 @@ const Editor = () => {
   return (
     <>
       <Header clients={clients} />
-      <div className="grid grid-cols-3 text-white">
+      <Split
+        className="split grid grid-cols-3 h-screen text-white overflow-hidden"
+        gutterSize={8}
+        maxSize={1000}
+        gutterAlign="end"
+      >
         <CodeEditor
           editorRoomId={editorRoomId}
           socketRef={socketRef.current}
@@ -107,11 +113,11 @@ const Editor = () => {
             codeRef.current = code;
           }}
         />
-        <div className="grid grid-row-2 bg-zinc-900">
+        <div className="flex flex-col bg-zinc-900">
           <InputArea />
           <OutputArea />
         </div>
-      </div>
+      </Split>
     </>
   );
 };
