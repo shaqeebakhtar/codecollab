@@ -91,9 +91,11 @@ This will start the frontend application and it will be accessible at [http://lo
 
 ## Roadmap
 
-- Additional browser support
+- Additional programming language support
 
-- Add more integrations
+- Run code and show output
+
+- Add cursor highlighting
 
 ## Contribution Guidelines
 
@@ -161,7 +163,7 @@ To submit your changes for review, create a pull request with the following info
 
 If you have any questions or need further assistance, you can reach out to the me:
 
-- Name: [Shaqeeb Akhtar]
+- Name: Shaqeeb Akhtar
   - Email: [shaqeebakhtar01@gmail.com]
   - Twitter: [shaqeeb_akhtar](https://twitter.com/shaqeeb_akhtar)
 
